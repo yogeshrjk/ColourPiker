@@ -1,10 +1,11 @@
+
 .color-picker {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #fff;
   }
   
   .color-picker h1 {
@@ -14,8 +15,10 @@
   }
   
   .color-list {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
     gap: 1.5rem;
+    justify-content: center;
   }
   
   .color-item {

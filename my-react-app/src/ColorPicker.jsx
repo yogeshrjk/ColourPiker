@@ -1,19 +1,15 @@
 import { useState } from "react";
 import React from "react";
 import "./ColorPicker.css";
+import cssNamedColors from './colors';
+import { HexColorPicker } from "react-colorful";
 
 export default function ColorPicker() {
   const [selectedColor, setSelectedColor] = useState({ hex: null, name: null });
   const [focusedIndex, setFocusedIndex] = useState(null);
+  const [color, setColor] = useState("#aabbcc");
 
-  const colors = [
-    { name: "Red", hex: "#FF0000" },
-    { name: "Green", hex: "#00FF00" },
-    { name: "Blue", hex: "#0000FF" },
-    { name: "Yellow", hex: "#FFFF00" },
-    { name: "Cyan", hex: "#00FFFF" },
-    { name: "Magenta", hex: "#FF00FF" },
-  ];
+  const colors = cssNamedColors;
 
   // Function to copy hex code to clipboard
   const copyToClipboard = (hexCode) => {
@@ -28,6 +24,12 @@ export default function ColorPicker() {
   };
 
   // Event Handlers
+  const copyHex = () => {
+    navigator.clipboard.writeText(color).then(() => {
+      console.log("Copied:", color);
+    });
+  };
+
   const handleClick = (color) => {
     setSelectedColor({ hex: color.hex, name: color.name });
     copyToClipboard(color.hex);
@@ -73,6 +75,11 @@ export default function ColorPicker() {
   };
 
   return (
+      <>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin:"30px 10px" }}>
+          <HexColorPicker color={color} onChange={setColor} onClick={copyHex}/>
+          {/*<button onClick={copyHex}>Copy Hex</button>*/}
+        </div>
     <div className="color-picker">
       <h1>Color Picker</h1>
       <div className="color-list">
@@ -98,5 +105,6 @@ export default function ColorPicker() {
         ))}
       </div>
     </div>
+        </>
   );
 }
